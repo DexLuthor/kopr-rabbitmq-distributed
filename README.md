@@ -37,11 +37,3 @@ In Intellij IDEA Ultimate Edition:
       4. Main class: `com.github.dexluthor.RabbitConsumerApplication`
       5. In the '*override parameters*' section add parameter: name - '*phoneNumber*', value - any you want
       6. Apply
-   2. Add run configurations for producer
-      1. Run -> Edit configurations
-      2. Button 'plus' (add new configuration)
-      3. Spring Boot
-      4. Main class: `com.github.dexluthor.RabbitProducerApplication`
-      5. In the '*override parameters*' section add parameter: name - '*chargeOrPay*', value - '*charge*' in case we want our producer to charge consumers, '*pay*' to make producer pay to consumer
-      6. Apply
----

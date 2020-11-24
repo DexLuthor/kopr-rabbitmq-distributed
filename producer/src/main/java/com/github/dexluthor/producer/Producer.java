@@ -1,4 +1,4 @@
-package com.github.dexluthor.launcher;
+package com.github.dexluthor.producer;
 
 import com.github.dexluthor.common.Utils;
 import com.github.dexluthor.entity.Charging;
@@ -7,7 +7,6 @@ import com.github.dexluthor.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -21,19 +20,16 @@ public class Producer {
     private final RabbitTemplate rabbitTemplate;
     private final UserRepository userRepository;
 
-    @Value("${chargeOrPay}")
-    private String chargeOrPay;
-
     public Producer(final RabbitTemplate rabbitTemplate, final UserRepository userRepository) {
         this.rabbitTemplate = rabbitTemplate;
         this.userRepository = userRepository;
     }
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 3000)
     public void produce() {
-        if ("charge".equals(chargeOrPay)) {
+        if (Math.random() >= 0.5) {
             charge();
-        } else if ("pay".equals(chargeOrPay)) {
+        } else {
             pay();
         }
     }
