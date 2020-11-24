@@ -10,6 +10,9 @@ import com.github.dexluthor.repositories.PaymentRepository;
 import com.github.dexluthor.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +29,20 @@ public class RabbitMessageListener {
         this.userRepository = userRepository;
     }
 
-    @RabbitListener(queues = "${phoneNumber}")
+    @RabbitListener(
+            bindings = {
+                    @QueueBinding(
+                            exchange = @Exchange("payment"),
+                            value = @Queue("${phoneNumber}"),
+                            key = "payment." + "${phoneNumber}"
+                    ),
+                    @QueueBinding(
+                            exchange = @Exchange("charging"),
+                            value = @Queue("${phoneNumber}"),
+                            key = "charging." + "${phoneNumber}"
+                    )
+            }
+    )
     public void listenForMessages(MoneyOperation moneyOperation) {
         val user = userRepository.findByPhoneNumber(moneyOperation.getRecipient())
                 .orElseGet(() -> new User(new BigDecimal(0), moneyOperation.getRecipient()));
@@ -39,7 +55,13 @@ public class RabbitMessageListener {
         }
     }
 
-    @RabbitListener(queues = "all_payments")
+    @RabbitListener(
+            bindings = @QueueBinding(
+                    exchange = @Exchange("payment"),
+                    value = @Queue("all_payments"),
+                    key = "payment.*"
+            )
+    )
     public void checkForSuspiciousPayment(Payment payment) {
         if (payment.getAmount().compareTo(new BigDecimal(5000)) >= 0) {
             handler.handle(payment);
