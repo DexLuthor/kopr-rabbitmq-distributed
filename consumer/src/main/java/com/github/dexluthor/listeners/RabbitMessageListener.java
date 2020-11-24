@@ -10,6 +10,7 @@ import com.github.dexluthor.repositories.PaymentRepository;
 import com.github.dexluthor.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
@@ -32,7 +33,7 @@ public class RabbitMessageListener {
     @RabbitListener(
             bindings = {
                     @QueueBinding(
-                            exchange = @Exchange("payment"),
+                            exchange = @Exchange(value = "payment", type = ExchangeTypes.TOPIC),
                             value = @Queue("${phoneNumber}"),
                             key = "payment." + "${phoneNumber}"
                     ),
@@ -57,7 +58,7 @@ public class RabbitMessageListener {
 
     @RabbitListener(
             bindings = @QueueBinding(
-                    exchange = @Exchange("payment"),
+                    exchange = @Exchange(value = "payment", type = ExchangeTypes.TOPIC),
                     value = @Queue("all_payments"),
                     key = "payment.*"
             )

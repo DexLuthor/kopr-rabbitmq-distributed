@@ -8,12 +8,12 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.math.BigDecimal;
 
-@Document
+@Document(collection = "user")
 @NoArgsConstructor
 @Data
 @Slf4j
 public class User {
-    private BigDecimal credit = BigDecimal.valueOf(10_000L);
+    private BigDecimal credit;
     private String phoneNumber;
     @MongoId
     private String id;
