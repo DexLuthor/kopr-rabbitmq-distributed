@@ -6,12 +6,11 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.4.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.github.dexluthor</groupId>
-    <artifactId>rabbit-producer</artifactId>
+    <artifactId>producer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rabbit-producer</name>
+    <name>producer</name>
     <description>RabbitMQ producer</description>
 
     <properties>
