@@ -30,10 +30,9 @@ In Intellij IDEA Ultimate Edition:
 2. Let Maven download all necessary dependencies
    1. Press `Double Shift` -> Reload All Maven Projects
 3. Run Configurations
-   1. Add run configurations for consumer
-      1. Run -> Edit configurations
-      2. Button 'plus' (add new configuration)
-      3. Spring Boot
-      4. Main class: `com.github.dexluthor.RabbitConsumerApplication`
-      5. In the '*override parameters*' section add parameter: name - '*phoneNumber*', value - any you want
-      6. Apply
+   1. Run -> Edit configurations
+   2. Button 'plus' (add new configuration)
+   3. Spring Boot
+   4. Main class: `com.github.dexluthor.RabbitConsumerApplication`
+   5. In the '*override parameters*' section add parameter: name - '*phoneNumber*', value - any you want
+   6. Apply
